@@ -22,8 +22,10 @@ public class UploaderResource {
     @POST
     public Response receiveContent(@FormParam("content") String value, @FormParam("uid") String uid) {
         LOG.info("Received data of size {} kb", ((double)value.length()) * 2 / 1024);
-        
-        File file = new File(uid);
+
+        File dir = getDataDirectory();
+
+        File file = new File(dir, uid);
         if(!file.exists()) {
             try {
                 file.createNewFile();
@@ -44,7 +46,15 @@ public class UploaderResource {
         
         return Response.accepted().build();    
     }
-    
+
+    private File getDataDirectory() {
+        File dir = new File("data");
+        if (!dir.exists()) {
+            dir.mkdir();
+        }
+        return dir;
+    }
+
     @Path("/test")
     @POST
     public void receiveContent() {
