@@ -1,0 +1,16 @@
+logging:
+  level: DEBUG
+  loggers: 
+    "com.intellij.stats.completion.UploaderResource": INFO
+    
+  appenders:
+    - type: console
+      threshold: INFO
+      target: stderr
+      
+    - type: file
+      threshold: INFO
+      currentLogFilename: ./logs/last.log
+      archivedLogFilenamePattern: ./logs/previous-%d.log.gz
+      archivedFileCount: 5
+      timeZone: UTC
