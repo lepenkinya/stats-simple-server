@@ -13,11 +13,11 @@ import java.nio.file.Files;
 import java.nio.file.StandardOpenOption;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 @Path("/stats")
 @Produces(MediaType.APPLICATION_JSON)
 public class UploaderResource {
-    private Logger LOG = LoggerFactory.getLogger(UploaderResource.class);
     private StatisticSaver mySaver;
 
     public UploaderResource(StatisticSaver saver) {
@@ -90,9 +90,13 @@ public class UploaderResource {
         builder.append('\n');
         builder.append('\n');
 
-        for (ContentInfo contentInfo : allData) {
+        Set<String> ids = mySaver.getAllUserIds();
+        for (String id : ids) {
+            ContentInfo contentInfo = mySaver.getInfoFor(id);
             Date date = new Date(contentInfo.timestamp);
-            builder.append("User: ").append(contentInfo.receivedDataKb).append("Kb ").append("Last sent ").append(date);
+            builder.append("User: ").append(id)
+                    .append(" Total size (Kb): ").append(contentInfo.receivedDataKb)
+                    .append(" Last sent: ").append(date);
             builder.append('\n');
         }
 

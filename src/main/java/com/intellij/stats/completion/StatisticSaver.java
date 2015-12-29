@@ -1,9 +1,6 @@
 package com.intellij.stats.completion;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class StatisticSaver {
 
@@ -19,7 +16,15 @@ public class StatisticSaver {
     public Collection<ContentInfo> getAllData() {
         return myIdToKb.values();
     }
-    
+
+    public Set<String> getAllUserIds() {
+        return myIdToKb.keySet();
+    }
+
+    public ContentInfo getInfoFor(String uid) {
+        return myIdToKb.get(uid);
+    }
+
 }
 
 
