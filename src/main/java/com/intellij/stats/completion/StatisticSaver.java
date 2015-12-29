@@ -9,8 +9,9 @@ public class StatisticSaver {
     public void dataReceived(String fromId, int contentLength) {
         double newContentKb = ((double) contentLength * 2) / 1024;
         ContentInfo info = myIdToKb.get(fromId);
+        long firstSent = info == null ? System.currentTimeMillis() : info.firstSentTimestamp;
         double newSizeKb = info == null ? newContentKb : (info.receivedDataKb + newContentKb);
-        myIdToKb.put(fromId, new ContentInfo(newSizeKb));
+        myIdToKb.put(fromId, new ContentInfo(newSizeKb, firstSent));
     }
     
     public Collection<ContentInfo> getAllData() {
@@ -30,10 +31,12 @@ public class StatisticSaver {
 
 class ContentInfo {
     public final double receivedDataKb;
-    public final long timestamp;
+    public final long lastSentTimestamp;
+    public final long firstSentTimestamp;
 
-    public ContentInfo(double receivedDataKb) {
+    public ContentInfo(double receivedDataKb, long firstTimestamp) {
         this.receivedDataKb = receivedDataKb;
-        this.timestamp = System.currentTimeMillis();
+        this.firstSentTimestamp = firstTimestamp;
+        this.lastSentTimestamp = System.currentTimeMillis();
     }
 }

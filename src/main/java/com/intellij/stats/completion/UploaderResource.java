@@ -1,8 +1,5 @@
 package com.intellij.stats.completion;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -93,10 +90,12 @@ public class UploaderResource {
         Set<String> ids = mySaver.getAllUserIds();
         for (String id : ids) {
             ContentInfo contentInfo = mySaver.getInfoFor(id);
-            Date date = new Date(contentInfo.timestamp);
+            Date firstSentDate = new Date(contentInfo.firstSentTimestamp);
+            Date lastSentDate = new Date(contentInfo.lastSentTimestamp);
             builder.append("User: ").append(id)
                     .append(" Total size (Kb): ").append(contentInfo.receivedDataKb)
-                    .append(" Last sent: ").append(date);
+                    .append(" First sent: ").append(firstSentDate)
+                    .append(" Last sent: ").append(lastSentDate);
             builder.append('\n');
         }
 
