@@ -84,7 +84,7 @@ public class UploaderResource {
         int allUsers = allData.size();
 
         builder.append("Total received data from ")
-                .append(allData)
+                .append(allUsers)
                 .append(" users");
 
         builder.append('\n');
