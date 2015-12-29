@@ -12,7 +12,8 @@ public class Collector extends Application<Configuration> {
 
     @Override
     public void run(Configuration configuration, Environment environment) throws Exception {
-        UploaderResource resource = new UploaderResource();
+        StatisticSaver statSaver = new StatisticSaver();
+        UploaderResource resource = new UploaderResource(statSaver);
         environment.jersey().register(resource);
     }
 
