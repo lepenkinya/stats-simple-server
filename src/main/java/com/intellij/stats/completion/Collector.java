@@ -13,8 +13,12 @@ public class Collector extends Application<Configuration> {
     @Override
     public void run(Configuration configuration, Environment environment) throws Exception {
         StatisticSaver statSaver = new StatisticSaver();
+        
         UploaderResource resource = new UploaderResource(statSaver);
+        ExperimentResource experimentResource = new ExperimentResource();
+        
         environment.jersey().register(resource);
+        environment.jersey().register(experimentResource);
     }
 
 }
